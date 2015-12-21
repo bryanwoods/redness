@@ -10,9 +10,10 @@ Gem::Specification.new do |s|
     "Bryan Woods",
     "Kenneth Lay",
     "Marco Carag",
-    "Conner Peirce"
+    "Conner Peirce",
+    "George Ogata"
   ]
-  s.email = "dev@howaboutwe.com"
+  s.email = "bryanwoods4e@gmail.com"
   s.summary = "Helpful Ruby classes for improved Redis data structures"
   s.description = "Helpful Ruby classes for improved Redis data structures"
   s.homepage = "http://github.com/howaboutwe/redness"
