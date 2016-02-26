@@ -3,6 +3,13 @@ require 'timeout'
 class Red
   class RedisUnavailable < StandardError; end
 
+  REDIS_ERRORS = [
+    RedisUnavailable,
+    Redis::CannotConnectError,
+    Redis::ConnectionError,
+    Redis::TimeoutError
+  ]
+
   class << self
     attr_accessor :redis
   end
@@ -21,7 +28,7 @@ class Red
 
   def execute_with_uncertainty(fail_return = [])
     yield
-  rescue RedisUnavailable, Redis::CannotConnectError, Redis::TimeoutError
+  rescue *REDIS_ERRORS
     fail_return
   end
 

@@ -2,16 +2,36 @@ require_relative '../spec_integration_helper'
 
 describe Red do
   describe "#execute_with_uncertainty" do
-    it "should return the given value if the block raises a Red::RedisUnavailable" do
-      Red.new.execute_with_uncertainty(:boom) { raise Red::RedisUnavailable }.should == :boom
+    context "when the block raises Red::RedisUnavailable" do
+      it "returns the given value" do
+        Red.new.execute_with_uncertainty(:boom) do
+          raise Red::RedisUnavailable
+        end.should == :boom
+      end
     end
 
-    it "should return the given value if the block raises a Redis::CannotConnectError" do
-      Red.new.execute_with_uncertainty(:boom) { raise Redis::CannotConnectError }.should == :boom
+    context "when the block raises Redis::CannotConnectError" do
+      it "returns the given value" do
+        Red.new.execute_with_uncertainty(:boom) do
+          raise Redis::CannotConnectError
+        end.should == :boom
+      end
     end
 
-    it "should return the given value if the block raises a Redis::TimeoutError" do
-      Red.new.execute_with_uncertainty(:boom) { raise Redis::TimeoutError }.should == :boom
+    context "when the block raises a Redis::ConnectionError" do
+      it "returns the given value" do
+        Red.new.execute_with_uncertainty(:boom) do
+          raise Redis::ConnectionError
+        end.should == :boom
+      end
+    end
+
+    context "when the block raises Redis::TimeoutError" do
+      it "returns the given value" do
+        Red.new.execute_with_uncertainty(:boom) do
+          raise Redis::TimeoutError
+        end.should == :boom
+      end
     end
   end
 
